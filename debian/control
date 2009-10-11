@@ -1,0 +1,19 @@
+Source: task-spooler
+Section: misc
+Priority: extra
+Maintainer: Alexander Inyukhin <shurick@sectorb.msk.ru>
+Build-Depends: cdbs, debhelper (>= 5)
+Standards-Version: 3.8.3
+Homepage: http://vicerveza.homeunix.net/~viric/soft/ts/
+
+Package: task-spooler
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Conflicts: moreutils
+Description: personal job scheduler
+ Task spooler is a Unix batch system where the tasks spooled run one
+ after the other. Each user in each system has his own job queue. The tasks are
+ run in the correct context (that of enqueue) from any shell/process, and its
+ output/results can be easily watched. It is very useful when you know that
+ your commands depend on a lot of RAM, a lot of disk use, give a lot of
+ output, or for whatever reason it's better not to run them at the same time.

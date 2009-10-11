@@ -1,0 +1,5 @@
+task-spooler (0.6.6-1) unstable; urgency=low
+
+  * Initial release (closes: #466542).
+
+ -- Alexander Inyukhin <shurick@sectorb.msk.ru>  Mon, 12 Oct 2009 03:27:48 +0400
