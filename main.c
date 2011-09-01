@@ -25,7 +25,7 @@ int server_socket;
 static char getopt_env[] = "POSIXLY_CORRECT=YES";
 static char *old_getopt_env;
 
-static char version[] = "Task Spooler v0.6.6 - a task queue system for the unix user.\n"
+static char version[] = "Task Spooler v0.7.0 - a task queue system for the unix user.\n"
 "Copyright (C) 2007-2009  Lluis Batlle i Rossell";
 
 
@@ -42,6 +42,7 @@ static void default_command_line()
     command_line.do_depend = 0;
     command_line.depend_on = -1; /* -1 means depend on previous */
     command_line.max_slots = 1;
+    command_line.wait_enqueuing = 1;
 }
 
 void get_command(int index, int argc, char **argv)
@@ -81,7 +82,7 @@ void parse_opts(int argc, char **argv)
 
     /* Parse options */
     while(1) {
-        c = getopt(argc, argv, ":VhKgClnfmr:t:c:o:p:w:u:s:U:i:L:dS:D:");
+        c = getopt(argc, argv, ":VhKgClnfmBr:t:c:o:p:w:u:s:U:i:L:dS:D:");
 
         if (c == -1)
             break;
@@ -187,6 +188,10 @@ void parse_opts(int argc, char **argv)
                             "Use different ids.\n");
                     exit(-1);
                 }
+                break;
+            case 'B':
+                /* I picked 'B' quite at random among the letters left */
+                command_line.wait_enqueuing = 0;
                 break;
             case ':':
                 switch(optopt)
@@ -337,6 +342,7 @@ static void print_help(const char *cmd)
     printf("  -w [id]  wait for a job. The last added, if not specified.\n");
     printf("  -u [id]  put that job first. The last added, if not specified.\n");
     printf("  -U <id-id>  swap two jobs in the queue.\n");
+    printf("  -B       in case of full queue on the server, quit (2) instead of waiting.\n");
     printf("  -h       show this help\n");
     printf("  -V       show the program version\n");
     printf("Options adding jobs:\n");

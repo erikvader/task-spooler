@@ -1,7 +1,7 @@
 enum
 {
     CMD_LEN=500,
-    PROTOCOL_VERSION=623
+    PROTOCOL_VERSION=700
 };
 
 enum msg_types
@@ -34,7 +34,8 @@ enum msg_types
     GET_MAX_SLOTS,
     GET_MAX_SLOTS_OK,
     GET_VERSION,
-    VERSION
+    VERSION,
+    NEWJOB_NOK
 };
 
 enum Request
@@ -73,6 +74,7 @@ struct Command_line {
     int jobid; /* When queuing a job, main.c will fill it automatically from
                   the server answer to NEWJOB */
     int jobid2;
+    int wait_enqueuing;
     struct {
         char **array;
         int num;
@@ -97,7 +99,8 @@ enum Jobstate
     QUEUED,
     RUNNING,
     FINISHED,
-    SKIPPED
+    SKIPPED,
+    HOLDING_CLIENT
 };
 
 struct msg
@@ -114,6 +117,7 @@ struct msg
             int env_size;
             int do_depend;
             int depend_on; /* -1 means depend on previous */
+            int wait_enqueuing;
         } newjob;
         struct {
             int ofilename_size;
@@ -172,6 +176,13 @@ struct Job
     struct Procinfo info;
 };
 
+enum ExitCodes
+{
+    EXITCODE_OK            =  0,
+    EXITCODE_UNKNOWN_ERROR = -1,
+    EXITCODE_QUEUE_FULL    = 2
+};
+
 
 /* client.c */
 void c_new_job();
@@ -226,6 +237,8 @@ void s_send_runjob(int s, int jobid);
 void s_set_max_slots(int new_max_slots);
 void s_get_max_slots(int s);
 int job_is_running(int jobid);
+int job_is_holding_client(int jobid);
+int wake_hold_client();
 
 /* server.c */
 void server_main(int notify_fd, char *_path);
