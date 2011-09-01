@@ -1,13 +1,5 @@
-task-spooler (0.6.6-2) unstable; urgency=low
-
-  * Use 3.0 source format
-  * Bump Standards-Version to 3.8.4
-  * Migrate from CDBS to dh
-
- -- Alexander Inyukhin <shurick@sectorb.msk.ru>  Fri, 02 Apr 2010 01:01:46 +0400
-
-task-spooler (0.6.6-1) unstable; urgency=low
+task-spooler (0.7.0-1~rc1) unstable; urgency=low
 
   * Initial release (closes: #466542).
 
- -- Alexander Inyukhin <shurick@sectorb.msk.ru>  Mon, 12 Oct 2009 03:27:48 +0400
+ -- Alexander Inyukhin <shurick@sectorb.msk.ru>  Fri, 02 Sep 2011 00:11:35 +0400
