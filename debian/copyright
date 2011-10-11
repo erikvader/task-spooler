@@ -1,4 +1,4 @@
-Format: http://dep.debian.net/deps/dep5/
+Format: http://anonscm.debian.org/viewvc/dep/web/deps/dep5.mdwn?revision=202
 Upstream-Name: task-spooler
 Upstream-Contact: Lluís Batlle i Rossel <viric@vicerveza.homeunix.net>
 Source: http://vicerveza.homeunix.net/~viric/soft/ts/
