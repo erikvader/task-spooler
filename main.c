@@ -25,7 +25,7 @@ int server_socket;
 static char getopt_env[] = "POSIXLY_CORRECT=YES";
 static char *old_getopt_env;
 
-static char version[] = "Task Spooler v0.7.1 - a task queue system for the unix user.\n"
+static char version[] = "Task Spooler v0.7.2 - a task queue system for the unix user.\n"
 "Copyright (C) 2007-2011  Lluis Batlle i Rossell";
 
 
@@ -43,6 +43,7 @@ static void default_command_line()
     command_line.depend_on = -1; /* -1 means depend on previous */
     command_line.max_slots = 1;
     command_line.wait_enqueuing = 1;
+    command_line.stderr_apart = 0;
 }
 
 void get_command(int index, int argc, char **argv)
@@ -82,7 +83,7 @@ void parse_opts(int argc, char **argv)
 
     /* Parse options */
     while(1) {
-        c = getopt(argc, argv, ":VhKgClnfmBr:t:c:o:p:w:u:s:U:i:L:dS:D:");
+        c = getopt(argc, argv, ":VhKgClnfmBEr:t:c:o:p:w:u:s:U:i:L:dS:D:");
 
         if (c == -1)
             break;
@@ -192,6 +193,9 @@ void parse_opts(int argc, char **argv)
             case 'B':
                 /* I picked 'B' quite at random among the letters left */
                 command_line.wait_enqueuing = 0;
+                break;
+            case 'E':
+                command_line.stderr_apart = 1;
                 break;
             case ':':
                 switch(optopt)
@@ -317,7 +321,7 @@ static void go_background()
 
 static void print_help(const char *cmd)
 {
-    printf("usage: %s [action] [-ngfmd] [-L <lab>] [-D <id>] [cmd...]\n", cmd);
+    printf("usage: %s [action] [-ngfmdE] [-L <lab>] [-D <id>] [cmd...]\n", cmd);
     printf("Env vars:\n");
     printf("  TS_SOCKET  the path to the unix socket used by the ts command.\n");
     printf("  TS_MAILTO  where to mail the result (on -m). Local user by default.\n");
@@ -327,6 +331,7 @@ static void print_help(const char *cmd)
     printf("  TS_ENV  command called on enqueue. Its output determines the job information.\n");
     printf("  TS_SAVELIST  filename which will store the list, if the server dies.\n");
     printf("  TS_SLOTS   amount of jobs which can run at once, read on server start.\n");
+    printf("  TMPDIR     directory where to place the output files and the default socket.\n");
     printf("Actions:\n");
     printf("  -K       kill the task spooler server\n");
     printf("  -C       clear the list of finished jobs\n");
@@ -347,6 +352,7 @@ static void print_help(const char *cmd)
     printf("  -V       show the program version\n");
     printf("Options adding jobs:\n");
     printf("  -n       don't store the output of the command.\n");
+    printf("  -E       Keep stderr apart, in a name like the output file, but adding '.e'.\n");
     printf("  -g       gzip the stored output (if not -n).\n");
     printf("  -f       don't fork into background.\n");
     printf("  -m       send the output by e-mail (uses sendmail).\n");
