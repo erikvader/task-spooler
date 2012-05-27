@@ -2,7 +2,7 @@ Source: task-spooler
 Section: misc
 Priority: extra
 Maintainer: Alexander Inyukhin <shurick@sectorb.msk.ru>
-Build-Depends: debhelper (>= 7.0.50~)
+Build-Depends: debhelper (>= 9~)
 Standards-Version: 3.9.3
 Homepage: http://vicerveza.homeunix.net/~viric/soft/ts/
 Vcs-Git: git://git.debian.org/collab-maint/task-spooler.git
