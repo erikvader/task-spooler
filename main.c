@@ -25,7 +25,7 @@ int server_socket;
 static char getopt_env[] = "POSIXLY_CORRECT=YES";
 static char *old_getopt_env;
 
-static char version[] = "Task Spooler v0.7.2 - a task queue system for the unix user.\n"
+static char version[] = "Task Spooler v0.7.3 - a task queue system for the unix user.\n"
 "Copyright (C) 2007-2011  Lluis Batlle i Rossell";
 
 
@@ -44,6 +44,7 @@ static void default_command_line()
     command_line.max_slots = 1;
     command_line.wait_enqueuing = 1;
     command_line.stderr_apart = 0;
+    command_line.num_slots = 1;
 }
 
 void get_command(int index, int argc, char **argv)
@@ -83,7 +84,7 @@ void parse_opts(int argc, char **argv)
 
     /* Parse options */
     while(1) {
-        c = getopt(argc, argv, ":VhKgClnfmBEr:t:c:o:p:w:u:s:U:i:L:dS:D:");
+        c = getopt(argc, argv, ":VhKgClnfmBEr:t:c:o:p:w:u:s:U:i:N:L:dS:D:");
 
         if (c == -1)
             break;
@@ -144,6 +145,11 @@ void parse_opts(int argc, char **argv)
             case 'i':
                 command_line.request = c_INFO;
                 command_line.jobid = atoi(optarg);
+                break;
+            case 'N':
+                command_line.num_slots = atoi(optarg);
+                if (command_line.num_slots < 0)
+                    command_line.num_slots = 0;
                 break;
             case 'r':
                 command_line.request = c_REMOVEJOB;
@@ -357,8 +363,9 @@ static void print_help(const char *cmd)
     printf("  -f       don't fork into background.\n");
     printf("  -m       send the output by e-mail (uses sendmail).\n");
     printf("  -d       the job will be run only if the job before ends well\n");
-    printf("  -D <id>  the job will be run only if the job of given id ends well \n");
+    printf("  -D <id>  the job will be run only if the job of given id ends well.\n");
     printf("  -L <lab> name this task with a label, to be distinguished on listing.\n");
+    printf("  -N <num> number of slots required by the job (1 default).\n");
 }
 
 static void print_version()
