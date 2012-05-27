@@ -1,5 +1,5 @@
-task-spooler (0.7.2-1) unstable; urgency=low
+task-spooler (0.7.3-1) unstable; urgency=low
 
   * Initial release (closes: #466542).
 
- -- Alexander Inyukhin <shurick@sectorb.msk.ru>  Tue, 22 Nov 2011 01:50:37 +0400
+ -- Alexander Inyukhin <shurick@sectorb.msk.ru>  Sun, 27 May 2012 11:32:50 +0400
