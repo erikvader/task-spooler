@@ -1,10 +1,10 @@
-Format: http://anonscm.debian.org/viewvc/dep/web/deps/dep5.mdwn?revision=202
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: task-spooler
 Upstream-Contact: Lluís Batlle i Rossel <viric@vicerveza.homeunix.net>
 Source: http://vicerveza.homeunix.net/~viric/soft/ts/
 
 Files: *
-Copyright: (C) 2007-2011 Lluís Batlle i Rossel <viric@vicerveza.homeunix.net>
+Copyright: (C) 2007-2012 Lluís Batlle i Rossel <viric@vicerveza.homeunix.net>
 License: GPL-2+
 
 Files: gentoo/ts-0.5.2.ebuild
@@ -12,7 +12,7 @@ Copyright: Copyright 1999-2007 Gentoo Foundation
 License: GPL-2+
 
 Files: debian/*
-Copyright: (C) 2008-2011 Alexander Inyukhin <shurick@sectorb.msk.ru>
+Copyright: (C) 2008-2012 Alexander Inyukhin <shurick@sectorb.msk.ru>
 License: GPL-2+
 
 License: GPL-2+
