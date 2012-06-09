@@ -1,3 +1,7 @@
+Description: Respect extrnal CFLAGS and CPPFLAGS
+Author: Alexander Inyukhin <shurick@sectorb.msk.ru>
+Forwarded: yes
+Last-Update: 2012-06-09
 --- a/Makefile
 +++ b/Makefile
 @@ -1,6 +1,7 @@

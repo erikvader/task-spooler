@@ -1,3 +1,7 @@
+Description: Fix GCC type warning
+Author: Alexander Inyukhin <shurick@sectorb.msk.ru>
+Forwarded: yes
+Last-Update: 2012-05-27
 --- a/env.c
 +++ b/env.c
 @@ -40,7 +40,7 @@
