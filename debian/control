@@ -1,6 +1,6 @@
 Source: task-spooler
 Section: misc
-Priority: extra
+Priority: optional
 Maintainer: Alexander Inyukhin <shurick@sectorb.msk.ru>
 Build-Depends: debhelper (>= 9~)
 Standards-Version: 3.9.3
