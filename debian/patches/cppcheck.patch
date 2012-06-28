@@ -1,0 +1,22 @@
+Description: Fix memory leak
+Author: Alexander Inyukhin <shurick@sectorb.msk.ru>
+Last-Update: 2012-06-29
+--- a/error.c
++++ b/error.c
+@@ -74,12 +74,16 @@
+ 
+     fd = open(new_path, O_CREAT | O_APPEND | O_WRONLY, 0600);
+     if (fd == -1)
++    {
++        free(new_path);
+         return 0;
++    }
+ 
+     out = fdopen(fd, "a");
+     if (out == NULL)
+     {
+         close(fd);
++        free(new_path);
+         return 0;
+     }
+ 
