@@ -1,3 +1,10 @@
+task-spooler (0.7.3-2) UNRELEASED; urgency=low
+
+  * Bump standards version to 3.9.4
+  * Pick bug fixing patch from upstream
+
+ -- Alexander Inyukhin <shurick@sectorb.msk.ru>  Mon, 20 May 2013 06:25:25 +0400
+
 task-spooler (0.7.3-1) unstable; urgency=low
 
   * Initial release (closes: #466542).
