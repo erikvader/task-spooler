@@ -3,6 +3,7 @@ task-spooler (0.7.3-2) UNRELEASED; urgency=low
   * Bump standards version to 3.9.4
   * Pick bug fixing patch from upstream
     This fixes segmentation fault on waiting for foreground (-nf) jobs
+  * Use canonical VCS-fields
 
  -- Alexander Inyukhin <shurick@sectorb.msk.ru>  Mon, 20 May 2013 06:25:25 +0400
 
