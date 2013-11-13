@@ -1,6 +1,6 @@
 /*
     Task Spooler - a task queue system for the unix user
-    Copyright (C) 2007-2009  Lluís Batlle i Rossell
+    Copyright (C) 2007-2013  Lluís Batlle i Rossell
 
     Please find the license in the provided COPYING file.
 */
@@ -627,6 +627,21 @@ int job_is_holding_client(int jobid)
     return job_is_in_state(jobid, HOLDING_CLIENT);
 }
 
+static int in_notify_list(int jobid)
+{
+    struct Notify *n, *tmp;
+
+    n = first_notify;
+    while (n != 0)
+    {
+        tmp = n;
+        n = n->next;
+        if (tmp->jobid == jobid)
+            return 1;
+    }
+    return 0;
+}
+
 void job_finished(const struct Result *result, int jobid)
 {
     struct Job *p;
@@ -681,8 +696,8 @@ void job_finished(const struct Result *result, int jobid)
             }
         }
 
-        /* Add it to the finished queue */
-        if (p->should_keep_finished)
+        /* Add it to the finished queue (maybe temporarily) */
+        if (p->should_keep_finished || in_notify_list(p->jobid))
             new_finished_job(p);
 
         /* Remove it from the run queue */
@@ -920,13 +935,15 @@ void notify_errorlevel(struct Job *p)
     }
 }
 
-int s_remove_job(int s, int jobid)
+/* jobid is input/output. If the input is -1, it's changed to the jobid
+ * removed */
+int s_remove_job(int s, int *jobid)
 {
     struct Job *p = 0;
     struct msg m;
     struct Job *before_p = 0;
 
-    if (jobid == -1)
+    if (*jobid == -1)
     {
         /* Find the last job added */
         p = firstjob;
@@ -956,7 +973,7 @@ int s_remove_job(int s, int jobid)
         p = firstjob;
         if (p != 0)
         {
-            while (p->next != 0 && p->jobid != jobid)
+            while (p->next != 0 && p->jobid != *jobid)
             {
                 before_p = p;
                 p = p->next;
@@ -964,17 +981,17 @@ int s_remove_job(int s, int jobid)
         }
 
         /* If not found, look in the 'finished' list */
-        if (p == 0 || p->jobid != jobid)
+        if (p == 0 || p->jobid != *jobid)
         {
             p = first_finished_job;
             if (p != 0)
             {
-                while (p->next != 0 && p->jobid != jobid)
+                while (p->next != 0 && p->jobid != *jobid)
                 {
                     before_p = p;
                     p = p->next;
                 }
-                if (p->jobid != jobid)
+                if (p->jobid != *jobid)
                     p = 0;
             }
         }
@@ -983,13 +1000,16 @@ int s_remove_job(int s, int jobid)
     if (p == 0 || p->state == RUNNING || p == firstjob)
     {
         char tmp[50];
-        if (jobid == -1)
+        if (*jobid == -1)
             sprintf(tmp, "The last job cannot be removed.\n");
         else
-            sprintf(tmp, "The job %i cannot be removed.\n", jobid);
+            sprintf(tmp, "The job %i cannot be removed.\n", *jobid);
         send_list_line(s, tmp);
         return 0;
     }
+
+    /* Return the jobid found */
+    *jobid = p->jobid;
 
     /* Tricks for the check_notify_list */
     p->state = FINISHED;
@@ -1095,6 +1115,34 @@ void s_remove_notification(int s)
     free(n);
 }
 
+static void destroy_finished_job(struct Job *j)
+{
+    if (j == first_finished_job)
+        first_finished_job = j->next;
+    else
+    {
+        struct Job *i;
+        for(i = first_finished_job; i != 0; ++i)
+        {
+            if (i->next == j)
+            {
+                i->next = j->next;
+                break;
+            }
+        }
+        if (i == 0) {
+            error("Cannot destroy the expected job %i", j->jobid);
+        }
+    }
+
+    free(j->notify_errorlevel_to);
+    free(j->command);
+    free(j->output_filename);
+    pinfo_free(&j->info);
+    free(j->label);
+    free(j);
+}
+
 /* This is called when a job finishes */
 void check_notify_list(int jobid)
 {
@@ -1118,6 +1166,12 @@ void check_notify_list(int jobid)
                  * removes the element from the linked list, we can
                  * safely follow on the list from n->next. */
                 s_remove_notification(tmp->socket);
+
+                /* Remove the jobs that were temporarily in the finished list,
+                 * just for their notifiers. */
+                if (!in_notify_list(jobid) && !j->should_keep_finished) {
+                    destroy_finished_job(j);
+                }
             }
         }
     }
