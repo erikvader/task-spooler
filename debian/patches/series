@@ -2,4 +2,3 @@ cppflags.patch
 gcc-warning.patch
 tsp.patch
 cppcheck.patch
-segv.patch
