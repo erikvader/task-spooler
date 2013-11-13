@@ -1,6 +1,6 @@
 /*
     Task Spooler - a task queue system for the unix user
-    Copyright (C) 2007-2009  Lluís Batlle i Rossell
+    Copyright (C) 2007-2013  Lluís Batlle i Rossell
 
     Please find the license in the provided COPYING file.
 */
@@ -438,7 +438,8 @@ static enum Break
         case REMOVEJOB:
             {
                 int went_ok;
-                went_ok = s_remove_job(s, m.u.jobid);
+                /* Will update the jobid. If it's -1, will set the jobid found */
+                went_ok = s_remove_job(s, &m.u.jobid);
                 if (went_ok)
                 {
                     int i;
