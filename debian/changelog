@@ -1,10 +1,10 @@
-task-spooler (0.7.4-1) UNRELEASED; urgency=low
+task-spooler (0.7.4-1) unstable; urgency=low
 
   * Use canonical VCS-fields
   * Imported Upstream version 0.7.4
   * Bump Standards-Version to 3.9.5 (no changes)
 
- -- Alexander Inyukhin <shurick@sectorb.msk.ru>  Sun, 08 Dec 2013 02:23:38 +0400
+ -- Alexander Inyukhin <shurick@sectorb.msk.ru>  Sun, 08 Dec 2013 02:26:42 +0400
 
 task-spooler (0.7.3-1) unstable; urgency=low
 
