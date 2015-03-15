@@ -1,3 +1,11 @@
+task-spooler (0.7.5-1) unstable; urgency=medium
+
+  * Imported Upstream version 0.7.5
+  * Bump Standards-Version to 3.9.6 (no changes)
+  * Escape dots in watchfile regex
+
+ -- Alexander Inyukhin <shurick@sectorb.msk.ru>  Mon, 16 Mar 2015 01:16:46 +0300
+
 task-spooler (0.7.4-1) unstable; urgency=low
 
   * Use canonical VCS-fields
