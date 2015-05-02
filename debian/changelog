@@ -3,8 +3,18 @@ task-spooler (0.7.5-1) unstable; urgency=medium
   * Imported Upstream version 0.7.5
   * Bump Standards-Version to 3.9.6 (no changes)
   * Escape dots in watchfile regex
+  * Use new URL for Vcs-Browser
+  * Remove useless docs from package
+  * Fix typo in cppflags.patch
+  * Enable all hardening options
+  * Update copyright file
+    - Set upstream license to GPL2
+    - Change upstream contact
+    - Update copyright years
+    - Add missing license for man page
+  * Add modification notice to man page
 
- -- Alexander Inyukhin <shurick@sectorb.msk.ru>  Mon, 16 Mar 2015 01:16:46 +0300
+ -- Alexander Inyukhin <shurick@sectorb.msk.ru>  Sat, 02 May 2015 23:13:49 +0300
 
 task-spooler (0.7.4-1) unstable; urgency=low
 
