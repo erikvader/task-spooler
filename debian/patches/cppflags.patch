@@ -1,6 +1,6 @@
 Description: Respect external CFLAGS and CPPFLAGS
 Author: Alexander Inyukhin <shurick@sectorb.msk.ru>
-Forwarded: yes
+Forwarded: https://groups.google.com/d/topic/taskspooler/2T41AtJMuU4/discussion
 Last-Update: 2012-06-09
 --- a/Makefile
 +++ b/Makefile
