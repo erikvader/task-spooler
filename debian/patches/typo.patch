@@ -1,0 +1,14 @@
+Description: Fix typo
+Author: Alexander Inyukhin <shurick@sectorb.msk.ru>
+Last-Update: 2016-03-20
+--- a/jobs.c
++++ b/jobs.c
+@@ -360,7 +360,7 @@
+                     add_notify_errorlevel_to(depended_job, p->jobid);
+                 else
+                     warning("The jobid %i is queued to do_depend on the jobid %i"
+-                        " suddenly non existant in the queue", p->jobid,
++                        " suddenly non existent in the queue", p->jobid,
+                         p->depend_on);
+             }
+             else /* Otherwise take the finished job, or the last_errorlevel */
