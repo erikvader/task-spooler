@@ -1,3 +1,17 @@
+task-spooler (0.7.6-1) unstable; urgency=medium
+
+  * Imported Upstream version 0.7.6
+  * Update patches
+  * Bump standards version to 3.9.7
+  * Use https for VCS-* fields
+  * Fix typo as suggested by lintian
+  * Update copyright years
+  * Add explicit version number to GPL2
+  * Use git instead of cgit in VCS-* fields
+  * Forward patches upstream and update headers
+
+ -- Alexander Inyukhin <shurick@sectorb.msk.ru>  Sun, 20 Mar 2016 11:52:24 +0300
+
 task-spooler (0.7.5-1) unstable; urgency=medium
 
   * Imported Upstream version 0.7.5
