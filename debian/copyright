@@ -1,7 +1,7 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: task-spooler
 Upstream-Contact: Lluís Batlle i Rossel <viric@viric.name>
-Source: http://vicerveza.homeunix.net/~viric/soft/ts/
+Source: http://viric.name/soft/ts/
 
 Files: *
 Copyright: 2007-2015 Lluís Batlle i Rossel <viric@viric.name>
