@@ -21,7 +21,7 @@ Author: Alexander Inyukhin <shurick@sectiorb.msk.ru>
 +.\"
 +.\" Modified 2012-06-09 by Alexander Inyukhin <shurick@sectorb.msk.ru>
 +.\"
- .TH TS 1 2016-03 "Task Spooler 0.7.6"
+ .TH TS 1 2016-03 "Task Spooler 1.0"
  .SH NAME
  ts \- task spooler. A simple unix batch system
  .SH SYNOPSIS
