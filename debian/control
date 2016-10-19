@@ -3,7 +3,7 @@ Section: misc
 Priority: optional
 Maintainer: Alexander Inyukhin <shurick@sectorb.msk.ru>
 Build-Depends: debhelper (>= 9~)
-Standards-Version: 3.9.7
+Standards-Version: 3.9.8
 Homepage: http://viric.name/soft/ts/
 Vcs-Git: https://anonscm.debian.org/git/collab-maint/task-spooler.git/
 Vcs-Browser: https://anonscm.debian.org/git/collab-maint/task-spooler.git/
