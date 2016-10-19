@@ -1,3 +1,12 @@
+task-spooler (1.0-1) unstable; urgency=medium
+
+  * New upstream version 1.0
+  * Update patches
+  * Change homepage to http://viric.name/soft/ts/
+  * Bump standards version to 3.9.8 (no changes)
+
+ -- Alexander Inyukhin <shurick@sectorb.msk.ru>  Wed, 19 Oct 2016 23:43:34 +0300
+
 task-spooler (0.7.6-1) unstable; urgency=medium
 
   * Imported Upstream version 0.7.6
