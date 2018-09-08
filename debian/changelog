@@ -1,3 +1,13 @@
+task-spooler (1.0-2) UNRELEASED; urgency=medium
+
+  * Update Vcs-Git and Vcs-Browser fields in debian/control.
+  * Use https for copyright-format
+  * Use debhelper v11
+  * Add upstream metadata file
+  * Update to standards version 4.2.1
+
+ -- Alexander Inyukhin <shurick@sectorb.msk.ru>  Sat, 08 Sep 2018 21:58:33 +0300
+
 task-spooler (1.0-1) unstable; urgency=medium
 
   * New upstream version
