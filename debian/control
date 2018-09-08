@@ -3,10 +3,11 @@ Section: misc
 Priority: optional
 Maintainer: Alexander Inyukhin <shurick@sectorb.msk.ru>
 Build-Depends: debhelper (>= 11~)
-Standards-Version: 3.9.8
+Standards-Version: 4.1.5
 Homepage: http://viric.name/soft/ts/
 Vcs-Git: https://salsa.debian.org/debian/task-spooler/
 Vcs-Browser: https://salsa.debian.org/debian/task-spooler/
+Rules-Requires-Root: no
 
 Package: task-spooler
 Architecture: any
