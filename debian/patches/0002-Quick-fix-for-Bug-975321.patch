@@ -1,0 +1,27 @@
+From: Alexander Inyukhin <shurick@sectorb.msk.ru>
+Date: Sat, 21 Nov 2020 21:17:02 +0300
+Subject: Quick fix for Bug#975321
+
+Use strncpy to prevent buffer overflow.
+Check for name length.
+---
+ server_start.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/server_start.c b/server_start.c
+index 34465c5..6d8262b 100644
+--- a/server_start.c
++++ b/server_start.c
+@@ -71,8 +71,11 @@ int try_connect(int s)
+     struct sockaddr_un addr;
+     int res;
+ 
++    memset(&addr, 0, sizeof(addr));
+     addr.sun_family = AF_UNIX;
+-    strcpy(addr.sun_path, socket_path);
++    strncpy(addr.sun_path, socket_path, sizeof(addr.sun_path) - 1);
++    if (strcmp(socket_path, addr.sun_path))
++        error("Cannot create the socket '%s'. Probably, the name is too long.", socket_path);
+ 
+     res = connect(s, (struct sockaddr *) &addr, sizeof(addr));
+ 
