@@ -1,12 +1,16 @@
-task-spooler (1.0-2) UNRELEASED; urgency=medium
+task-spooler (1.0+dfsg1-1) UNRELEASED; urgency=medium
 
   * Update Vcs-Git and Vcs-Browser fields in debian/control.
   * Use https for copyright-format
-  * Use debhelper v11
   * Add upstream metadata file
-  * Update to standards version 4.2.1
+  * Fix buffer overflow (closes: #975321)
+  * Update to standards version 4.5.0
+  * Exclude copyrighted material and unneeded files
+  * Upgrade watch file to version 4 and repack source
+  * New upstream version 1.0+dfsg1
+  * Use debhelper v13
 
- -- Alexander Inyukhin <shurick@sectorb.msk.ru>  Sat, 08 Sep 2018 21:58:33 +0300
+ -- Alexander Inyukhin <shurick@sectorb.msk.ru>  Sun, 22 Nov 2020 10:28:18 +0300
 
 task-spooler (1.0-1) unstable; urgency=medium
 
