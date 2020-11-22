@@ -2,6 +2,12 @@ Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: task-spooler
 Upstream-Contact: Lluís Batlle i Rossel <viric@viric.name>
 Source: http://viric.name/soft/ts/
+Files-Excluded:
+ web/*
+ gentoo/*
+ deb/*
+ debian-pkg/*
+ .hg*
 
 Files: *
 Copyright: 2007-2015 Lluís Batlle i Rossel <viric@viric.name>
@@ -10,14 +16,6 @@ License: GPL-2
 Files: ts.1
 Copyright: 2007-2015 Lluís Batlle i Rossel <viric@viric.name>
 License: LDP-GPL-1
-
-Files: gentoo/ts-0.5.2.ebuild
-Copyright: 1999-2007 Gentoo Foundation
-License: GPL-2
-
-Files: web/ts-0.5.4.ebuild
-Copyright: 1999-2008 Gentoo Foundation
-License: GPL-2
 
 Files: debian/*
 Copyright: 2008-2016 Alexander Inyukhin <shurick@sectorb.msk.ru>
