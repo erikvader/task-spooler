@@ -1,0 +1,16 @@
+Subject: Minor fixes to man page
+Author: Alexander Inyukhin <shurick@sectiorb.msk.ru>
+--- a/ts.1
++++ b/ts.1
+@@ -107,9 +107,9 @@
+ any other; the ".e" will be overwritten if it existed.
+ .TP
+ .B "\-N <num>"
+-Run the command only if there are \fbnum\fB slots free in the queue. Without it,
++Run the command only if there are \fbnum\fR slots free in the queue. Without it,
+ the job will run if there is one slot free. For example, if you use the
+-queue to feed cpu cores, and you know that a job will take two cores, with \fB\-N\fB
++queue to feed cpu cores, and you know that a job will take two cores, with \fB\-N\fR
+ you can let ts know that.
+ .SH ACTIONS
+ Instead of giving a new command, we can use the parameters for other purposes:
