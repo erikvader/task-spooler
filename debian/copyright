@@ -1,7 +1,7 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: task-spooler
 Upstream-Contact: Lluís Batlle i Rossel <viric@viric.name>
-Source: http://viric.name/soft/ts/
+Source: https://viric.name/soft/ts/
 Files-Excluded:
  web/*
  gentoo/*

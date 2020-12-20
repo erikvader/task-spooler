@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Alexander Inyukhin <shurick@sectorb.msk.ru>
 Build-Depends: debhelper-compat (= 13)
 Standards-Version: 4.5.0
-Homepage: http://viric.name/soft/ts/
+Homepage: https://viric.name/soft/ts/
 Vcs-Git: https://salsa.debian.org/debian/task-spooler/
 Vcs-Browser: https://salsa.debian.org/debian/task-spooler/
 Rules-Requires-Root: no
