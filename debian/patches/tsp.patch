@@ -18,25 +18,114 @@ Author: Alexander Inyukhin <shurick@sectiorb.msk.ru>
  .\" that should have been distributed together with this file.
  .\" 
  .\" Note: I took the gnu 'ls' man page as an example.
+-.TH TS 1 2020-12 "Task Spooler 1.0.1"
 +.\"
-+.\" Modified 2012-06-09 by Alexander Inyukhin <shurick@sectorb.msk.ru>
++.\" Modified 2020-12-20 by Alexander Inyukhin <shurick@sectorb.msk.ru>
 +.\"
- .TH TS 1 2016-03 "Task Spooler 1.0"
++.TH TSP 1 2020-12 "Task Spooler 1.0.1"
  .SH NAME
- ts \- task spooler. A simple unix batch system
+-ts \- task spooler. A simple unix batch system
++tsp \- task spooler. A simple unix batch system
  .SH SYNOPSIS
 -.BI "ts [" actions "] [" options "] [" command... ]
 +.BI "tsp [" actions "] [" options "] [" command... ]
  .sp
  Actions:
  .BI "[\-KClhV]
-@@ -318,3 +321,9 @@
+@@ -32,13 +35,13 @@
+ .BI "[\-D <"id >]
+ 
+ .SH DESCRIPTION
+-.B ts
++.B tsp
+ will run by default a per user unix task queue. The user can add commands to
+ the queue, watch that queue at any moment, and look at the task results
+ (actually, standard output and exit error).
+ .SH SIMPLE USE
+ Calling
+-.B ts
++.B tsp
+ with a command will add that command to the queue, and calling it without
+ commands or parameters will show the task list.
+ .SH COMMAND OPTIONS
+@@ -113,15 +116,15 @@
+ .TP
+ .B "\-K"
+ Kill the
+-.B ts
++.B tsp
+ server for the calling client. This will remove the unix socket and
+ all the
+-.B ts
++.B tsp
+ processes related to the queue. This will not kill the command being
+ run at that time.
+ 
+ It is not reliable to think that
+-.B ts -K
++.B tsp -K
+ will finish when the server is really killed. By now it is a race condition.
+ .TP
+ .B "\-C"
+@@ -130,7 +133,7 @@
+ .B "\-l"
+ Show the list of jobs - to be run, running and finished - for the current queue.
+ This is the default behaviour if
+-.B ts
++.B tsp
+ is called without options.
+ .TP
+ .B "\-t [id]"
+@@ -186,7 +189,7 @@
+ .B "\-V"
+ Show the program version.
+ .SH MULTI-SLOT
+-.B ts
++.B tsp
+ by default offers a queue where each job runs only after the previous finished.
+ Nevertheless, you can change the maximum number of jobs running at once with
+ the
+@@ -252,7 +255,7 @@
+ .B \-S,
+ but the contents of the variable are read only when running
+ the first instance of
+-.B ts.
++.B tsp.
+ .TP
+ .B "TS_MAILTO"
+ Send the letters with job results to the address specified in this variable.
+@@ -275,7 +278,7 @@
+ .TP
+ .B "TS_SAVELIST"
+ If it is defined when starting the queue server (probably the first
+-.B ts
++.B tsp
+ command run), on SIGTERM the queue status will be saved to the file pointed
+ by this environment variable - for example, at system shutdown.
+ .TP
+@@ -288,12 +291,12 @@
+ .TP
+ .B /tmp/ts.error
+ if
+-.B ts
++.B tsp
+ finds any internal problem, you should find an error report there.
+ Please send this to the author as part of the bug report.
+ 
+ .SH BUGS
+-.B ts
++.B tsp
+ expects a simple command line. It does not start a shell parser.
+ If you want to run complex shell commands, you may want to run them through
+ .B sh -c 'commands...'
+@@ -313,8 +316,8 @@
+ Lluis Batlle i Rossell
+ .SH NOTES
+ This page describes
+-.B ts
++.B tsp
+ as in version 1.0. Other versions may differ. The file
  .B TRICKS
  found in the distribution package can show some ideas on special uses of
- .B ts.
-+
-+The Debian version of
-+.B ts
-+is called
-+.B tsp
-+to avoid name conflict with moreutils package.
+-.B ts.
++.B tsp.
