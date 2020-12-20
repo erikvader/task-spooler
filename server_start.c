@@ -71,8 +71,11 @@ int try_connect(int s)
     struct sockaddr_un addr;
     int res;
 
+    memset(&addr, 0, sizeof(addr));
     addr.sun_family = AF_UNIX;
-    strcpy(addr.sun_path, socket_path);
+    strncpy(addr.sun_path, socket_path, sizeof(addr.sun_path) - 1);
+    if (strcmp(socket_path, addr.sun_path))
+        error("Cannot create the socket '%s'. Probably, the name is too long.", socket_path);
 
     res = connect(s, (struct sockaddr *) &addr, sizeof(addr));
 
