@@ -1,4 +1,4 @@
-task-spooler (1.0.1+dfsg1-1) UNRELEASED; urgency=medium
+task-spooler (1.0.1+dfsg1-1) unstable; urgency=medium
 
   * Change http to https in urls
   * New upstream version 1.0.1+dfsg1
@@ -7,7 +7,7 @@ task-spooler (1.0.1+dfsg1-1) UNRELEASED; urgency=medium
   * Minor man page fixes
   * Bump Standards-Version to 4.5.1 (no changes)
 
- -- Alexander Inyukhin <shurick@sectorb.msk.ru>  Sun, 20 Dec 2020 23:04:29 +0300
+ -- Alexander Inyukhin <shurick@sectorb.msk.ru>  Sun, 20 Dec 2020 23:07:31 +0300
 
 task-spooler (1.0+dfsg1-1) unstable; urgency=medium
 
