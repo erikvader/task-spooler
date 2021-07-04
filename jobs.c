@@ -429,6 +429,17 @@ int s_newjob(int s, struct msg *m)
     if (res == -1)
         error("wrong bytes received");
 
+    // load command array
+    p->command_num = m->u.newjob.command_num;
+    p->command_size = m->u.newjob.command_size;
+    p->command_array = malloc(m->u.newjob.command_size);
+    if (p->command_array == 0)
+        error("Cannot allocate memory in s_newjob command_array_size (%i)",
+                m->u.newjob.command_size);
+    res = recv_bytes(s, p->command_array, m->u.newjob.command_size);
+    if (res == -1)
+        error("wrong bytes received");
+
     /* load the label */
     p->label = 0;
     if (m->u.newjob.label_size > 0)
@@ -1531,5 +1542,23 @@ void joblist_dump(int fd)
         write(fd,buffer,strlen(buffer));
         free(buffer);
         p = p->next;
+    }
+}
+
+void s_send_command(int s, int jobid) {
+    struct Job *p = find_finished_job(jobid);
+    struct msg m;
+    m.type = GET_COMMAND_OK;
+    if (p == 0) {
+        m.u.newjob.command_size = 0;
+        m.u.newjob.command_num = 0;
+    } else {
+        m.u.newjob.command_size = p->command_size;
+        m.u.newjob.command_num = p->command_num;
+    }
+    send_msg(s, &m);
+
+    if (p != 0) {
+        send_bytes(s, p->command_array, m.u.newjob.command_size);
     }
 }

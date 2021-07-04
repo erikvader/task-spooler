@@ -13,6 +13,8 @@ enum
 enum msg_types
 {
     KILL_SERVER,
+    GET_COMMAND,
+    GET_COMMAND_OK,
     NEWJOB,
     NEWJOB_OK,
     RUNJOB,
@@ -57,6 +59,7 @@ enum Request
     c_SHOW_OUTPUT_FILE,
     c_SHOW_PID,
     c_REMOVEJOB,
+    c_RESTARTJOB,
     c_WAITJOB,
     c_URGENT,
     c_GET_STATE,
@@ -119,6 +122,7 @@ struct msg
     union
     {
         struct {
+            int command_num;
             int command_size;
             int store_output;
             int should_keep_finished;
@@ -171,6 +175,9 @@ struct Job
     struct Job *next;
     int jobid;
     char *command;
+    char *command_array;
+    int command_size;
+    int command_num;
     enum Jobstate state;
     struct Result result; /* Defined in msg.h */
     char *output_filename;
@@ -217,12 +224,15 @@ int c_wait_newjob_ok();
 void c_get_state();
 void c_swap_jobs();
 void c_show_info();
-char *build_command_string();
+char *build_command_string(char sep);
+char **to_argv(char *command_array, int *num);
 void c_send_max_slots(int max_slots);
 void c_get_max_slots();
 void c_check_version();
+char *c_restart_job(int *num_place);
 
 /* jobs.c */
+void s_send_command(int s, int jobid);
 void s_list(int s);
 int s_newjob(int s, struct msg *m);
 void s_removejob(int jobid);

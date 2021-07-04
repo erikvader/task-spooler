@@ -84,7 +84,7 @@ void parse_opts(int argc, char **argv)
 
     /* Parse options */
     while(1) {
-        c = getopt(argc, argv, ":VhKgClnfmBEr:t:c:o:p:w:k:u:s:U:i:N:L:dS:D:");
+        c = getopt(argc, argv, ":VhKgClnfmBEr:t:c:o:p:w:k:u:s:U:i:N:L:dS:D:R:");
 
         if (c == -1)
             break;
@@ -157,6 +157,10 @@ void parse_opts(int argc, char **argv)
                 break;
             case 'r':
                 command_line.request = c_REMOVEJOB;
+                command_line.jobid = atoi(optarg);
+                break;
+            case 'R':
+                command_line.request = c_RESTARTJOB;
                 command_line.jobid = atoi(optarg);
                 break;
             case 'w':
@@ -358,6 +362,7 @@ static void print_help(const char *cmd)
     printf("  -i [id]  show job information. Of last job run, if not specified.\n");
     printf("  -s [id]  show the job state. Of the last added, if not specified.\n");
     printf("  -r [id]  remove a job. The last added, if not specified.\n");
+    printf("  -R <id>  restart a job by adding it again.\n");
     printf("  -w [id]  wait for a job. The last added, if not specified.\n");
     printf("  -k [id]  send SIGTERM to the job process group. The last run, if not specified.\n");
     printf("  -u [id]  put that job first. The last added, if not specified.\n");
@@ -402,6 +407,7 @@ static void unset_getopt_env()
 int main(int argc, char **argv)
 {
     int errorlevel = 0;
+    char *command_array = 0;
 
     process_type = CLIENT;
 
@@ -420,6 +426,7 @@ int main(int argc, char **argv)
         c_check_version();
     }
 
+request:
     switch(command_line.request)
     {
     case c_SHOW_VERSION:
@@ -503,6 +510,20 @@ int main(int argc, char **argv)
             error("The command %i needs the server", command_line.request);
         c_remove_job();
         break;
+    case c_RESTARTJOB:
+    {
+        if (!command_line.need_server)
+            error("The command %i needs the server", command_line.request);
+        int new_argc;
+        command_array = c_restart_job(&new_argc);
+        char **new_argv = to_argv(command_array, &new_argc);
+        new_argv[0] = argv[0];
+        command_line.command.array = new_argv+2;
+        command_line.command.num = new_argc-2;
+        command_line.request = c_QUEUE;
+        goto request;
+        break;
+    }
     case c_WAITJOB:
         if (!command_line.need_server)
             error("The command %i needs the server", command_line.request);
@@ -531,6 +552,9 @@ int main(int argc, char **argv)
         c_get_state();
         break;
     }
+
+    if (command_array != 0)
+        free(command_array);
 
     if (command_line.need_server)
     {

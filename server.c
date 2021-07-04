@@ -383,6 +383,9 @@ static enum Break
         case KILL_SERVER:
             return BREAK; /* break in the parent*/
             break;
+        case GET_COMMAND:
+            s_send_command(s, m.u.jobid);
+            break;
         case NEWJOB:
             client_cs[index].jobid = s_newjob(s, &m);
             client_cs[index].hasjob = 1;

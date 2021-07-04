@@ -85,7 +85,7 @@ static void run_parent(int fd_read_filename, int pid, struct Result *result)
         result->errorlevel = -1;
     }
 
-    command = build_command_string();
+    command = build_command_string(' ');
     if (command_line.send_output_by_mail)
     {
         send_mail(command_line.jobid, result->errorlevel, ofname, command);

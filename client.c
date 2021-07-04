@@ -12,13 +12,14 @@
 #include <sys/socket.h>
 #include <sys/time.h>
 #include <signal.h>
+#include <assert.h>
 #include "main.h"
 
 static void c_end_of_job(const struct Result *res);
 static void c_wait_job_send();
 static void c_wait_running_job_send();
 
-char *build_command_string()
+char *build_command_string(char sep)
 {
     int size;
     int i;
@@ -33,7 +34,7 @@ char *build_command_string()
     /* Count bytes needed */
     for (i = 0; i < num; ++i)
     {
-        /* The '1' is for spaces, and at the last i,
+        /* The '1' is for sep, and at the last i,
          * for the null character */
         size = size + strlen(array[i]) + 1;
     }
@@ -44,11 +45,13 @@ char *build_command_string()
         error("Error in malloc for commandstring");
 
     /* Build the command */
+    int c = strlen(array[0]);
     strcpy(commandstring, array[0]);
     for (i = 1; i < num; ++i)
     {
-        strcat(commandstring, " ");
-        strcat(commandstring, array[i]);
+        commandstring[c] = sep;
+        strcpy((commandstring + c+1), array[i]);
+        c += strlen(array[i])+1;
     }
 
     return commandstring;
@@ -62,11 +65,14 @@ void c_new_job()
 
     m.type = NEWJOB;
 
-    new_command = build_command_string();
+    new_command = build_command_string(' ');
+
+    char *command_array = build_command_string('\0');
 
     myenv = get_environment();
 
     /* global */
+    m.u.newjob.command_num = command_line.command.num;
     m.u.newjob.command_size = strlen(new_command) + 1; /* add null */
     if (myenv)
         m.u.newjob.env_size = strlen(myenv) + 1; /* add null */
@@ -89,6 +95,7 @@ void c_new_job()
 
     /* Send the command */
     send_bytes(server_socket, new_command, m.u.newjob.command_size);
+    send_bytes(server_socket, command_array, m.u.newjob.command_size);
 
     /* Send the label */
     send_bytes(server_socket, command_line.label, m.u.newjob.label_size);
@@ -97,6 +104,7 @@ void c_new_job()
     send_bytes(server_socket, myenv, m.u.newjob.env_size);
 
     free(new_command);
+    free(command_array);
     free(myenv);
 }
 
@@ -671,4 +679,50 @@ void c_swap_jobs()
     }
     /* This will never be reached */
     return;
+}
+
+char **to_argv(char *command_array, int *num) {
+    assert(num != 0 && *num > 0);
+    int argc = *num+2; // ts -- command_array
+    char **res = malloc(sizeof(char*) * (argc+1)); // last is null
+    res[0] = 0;
+    res[1] = "--";
+    res[argc] = 0;
+    char *next = command_array;
+    for(int i = 2; i < argc; i++){
+        res[i] = next;
+        while(*(next++)) {}
+    }
+    *num = argc;
+    return res;
+}
+
+char *c_restart_job(int *num_place) {
+    struct msg m;
+    m.type = GET_COMMAND;
+    m.u.jobid = command_line.jobid;
+    send_msg(server_socket, &m);
+
+    /* Receive the answer */
+    int res = recv_msg(server_socket, &m);
+    if(res != sizeof(m))
+        error("Error in restart_job");
+
+    if (m.type != GET_COMMAND_OK) {
+        error("restart_job wrong answer");
+    }
+
+    int size = m.u.newjob.command_size;
+    if (size <= 0) {
+        error("job does not exist");
+    }
+    int num = m.u.newjob.command_num;
+    char *arr = malloc(size);
+    res = recv_bytes(server_socket, arr, size);
+    if (res != size) {
+        error("restart_job did not receive everything");
+    }
+
+    *num_place = num;
+    return arr;
 }
