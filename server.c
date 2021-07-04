@@ -414,7 +414,7 @@ static enum Break
             }
             break;
         case LIST:
-            s_list(s);
+            s_list(s, m.u.list_non_zero);
             /* We must actively close, meaning End of Lines */
             close(s);
             remove_connection(index);

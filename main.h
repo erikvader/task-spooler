@@ -92,6 +92,7 @@ struct Command_line {
     } command;
     char *label;
     int num_slots; /* Slots for the job to use. Default 1 */
+    int list_non_zero;
 };
 
 enum Process_type {
@@ -157,6 +158,7 @@ struct msg
         int last_errorlevel;
         int max_slots;
         int version;
+        int list_non_zero;
     } u;
 };
 
@@ -233,7 +235,7 @@ char *c_restart_job(int *num_place);
 
 /* jobs.c */
 void s_send_command(int s, int jobid);
-void s_list(int s);
+void s_list(int s, int non_zero_only);
 int s_newjob(int s, struct msg *m);
 void s_removejob(int jobid);
 void job_finished(const struct Result *result, int jobid);

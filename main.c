@@ -45,6 +45,7 @@ static void default_command_line()
     command_line.wait_enqueuing = 1;
     command_line.stderr_apart = 0;
     command_line.num_slots = 1;
+    command_line.list_non_zero = 0;
 }
 
 void get_command(int index, int argc, char **argv)
@@ -84,7 +85,7 @@ void parse_opts(int argc, char **argv)
 
     /* Parse options */
     while(1) {
-        c = getopt(argc, argv, ":VhKgClnfmBEr:t:c:o:p:w:k:u:s:U:i:N:L:dS:D:R:");
+        c = getopt(argc, argv, ":VhKgClnfmBEer:t:c:o:p:w:k:u:s:U:i:N:L:dS:D:R:");
 
         if (c == -1)
             break;
@@ -101,6 +102,9 @@ void parse_opts(int argc, char **argv)
                 break;
             case 'l':
                 command_line.request = c_LIST;
+                break;
+            case 'e':
+                command_line.list_non_zero = 1;
                 break;
             case 'h':
                 command_line.request = c_SHOW_HELP;
@@ -380,6 +384,8 @@ static void print_help(const char *cmd)
     printf("  -D <id>  the job will be run only if the job of given id ends well.\n");
     printf("  -L <lab> name this task with a label, to be distinguished on listing.\n");
     printf("  -N <num> number of slots required by the job (1 default).\n");
+    printf("Options listing jobs:\n");
+    printf("  -e       only list jobs that exited with a non-zero exit code\n");
 }
 
 static void print_version()

@@ -196,6 +196,7 @@ void c_list_jobs()
     struct msg m;
 
     m.type = LIST;
+    m.u.list_non_zero = command_line.list_non_zero;
 
     send_msg(server_socket, &m);
 }

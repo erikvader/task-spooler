@@ -218,7 +218,7 @@ const char * jstate2string(enum Jobstate s)
     return jobstate;
 }
 
-void s_list(int s)
+void s_list(int s, int non_zero_only)
 {
     struct Job *p;
     char *buffer;
@@ -246,9 +246,11 @@ void s_list(int s)
     /* Show Finished jobs */
     while(p != 0)
     {
-        buffer = joblist_line(p);
-        send_list_line(s,buffer);
-        free(buffer);
+        if (!non_zero_only || p->result.errorlevel != 0) {
+            buffer = joblist_line(p);
+            send_list_line(s,buffer);
+            free(buffer);
+        }
         p = p->next;
     }
 }
