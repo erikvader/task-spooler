@@ -1,7 +1,7 @@
 PREFIX?=/usr/local
 GLIBCFLAGS=-D_XOPEN_SOURCE=500 -D__STRICT_ANSI__
 CPPFLAGS+=$(GLIBCFLAGS)
-CFLAGS?=-pedantic -Wall -Wextra -std=gnu17 -Wno-implicit-fallthrough
+CFLAGS?=-pedantic -Wall -Wextra -Wno-implicit-fallthrough -ggdb -Og
 OBJECTS=main.o \
 	server.o \
 	server_start.o \
@@ -20,15 +20,7 @@ OBJECTS=main.o \
 	tail.o
 INSTALL=install -c
 
-all: release
-
-.PHONY: debug
-debug: ts
-debug: CFLAGS+= -ggdb -Og
-
-.PHONY: release
-release: ts
-release: CFLAGS+= -O3
+all: ts
 
 tsretry: tsretry.c
 
