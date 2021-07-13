@@ -1,6 +1,6 @@
 pkgname=task-spooler
-pkgver=1.0.1e
-pkgrel=4
+pkgver=1.1.0
+pkgrel=0
 pkgdesc="task-spooler"
 arch=('x86_64')
 license=('GPL')

@@ -20,6 +20,7 @@ OBJECTS=main.o \
 	tail.o
 INSTALL=install -c
 
+.PHONY: all clean install
 all: ts
 
 tsretry: tsretry.c
@@ -52,7 +53,7 @@ tail.o: tail.c main.h
 ttail.o: ttail.c main.h
 
 clean:
-	rm -f *.o ts
+	rm -rf *.o ts pkg src task-spooler*.pkg.tar.*
 
 install: ts
 	$(INSTALL) -d $(PREFIX)/bin
