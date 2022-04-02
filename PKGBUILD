@@ -1,5 +1,5 @@
 pkgname=task-spooler
-pkgver=1.1.0
+pkgver=1.1.1
 pkgrel=0
 pkgdesc="task-spooler"
 arch=('x86_64')

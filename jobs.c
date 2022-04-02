@@ -232,7 +232,7 @@ void s_list(int s, int non_zero_only)
     p = firstjob;
     while(p != 0)
     {
-        if (p->state != HOLDING_CLIENT)
+        if (!non_zero_only && p->state != HOLDING_CLIENT)
         {
             buffer = joblist_line(p);
             send_list_line(s,buffer);
